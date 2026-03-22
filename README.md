@@ -1,4 +1,4 @@
-# CRUD Usuarios — Arquitectura Hexagonal con DDD y CQRS
+# CRUD Usuarios: Arquitectura Hexagonal con DDD y CQRS
 
 Aplicación web PHP para la gestión de usuarios: registro, listado, visualización, edición, eliminación, autenticación con sesión y recuperación de contraseña por correo.
 
@@ -30,7 +30,7 @@ Aplicación web PHP para la gestión de usuarios: registro, listado, visualizaci
 - Front Controller · Single Entry Point
 
 
-### Configuración externalizada (12-Factor App — Factor III)
+### Configuración externalizada (12-Factor App: Factor III)
 - Variables de entorno separadas del código fuente
 - Credenciales en `.env` (ignorado por git), nunca en se debe publicar en el repo
 - `.env.example` como plantilla y documentación de ejemplo para el equipo
