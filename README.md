@@ -29,6 +29,18 @@ Aplicación web PHP para la gestión de usuarios: registro, listado, visualizaci
 - Capas: Domain / Application / Infrastructure / Entrypoints
 - Front Controller · Single Entry Point
 
+### Capa de Dominio
+- Rich Domain Model
+- Value Objects
+- Named Constructors
+- Domain Exceptions
+- Domain Events
+- Enumerations (Enums)
+- Ubiquitous Language
+- Inmutabilidad
+- Fail-fast validation
+- Encapsulación de reglas de negocio
+
 
 ### Configuración externalizada (12-Factor App: Factor III)
 - Variables de entorno separadas del código fuente
