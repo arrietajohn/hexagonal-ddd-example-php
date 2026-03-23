@@ -42,6 +42,16 @@ Aplicación web PHP para la gestión de usuarios: registro, listado, visualizaci
 - Encapsulación de reglas de negocio
 
 
+### Capa de Aplicación
+- Use Cases
+- Application Services
+- Ports In (interfaces de casos de uso)
+- Ports Out (interfaces de persistencia)
+- Commands y Queries
+- DTOs
+- Anti-corruption Layer
+- Application Mapper
+
 ### Configuración externalizada (12-Factor App: Factor III)
 - Variables de entorno separadas del código fuente
 - Credenciales en `.env` (ignorado por git), nunca en se debe publicar en el repo
