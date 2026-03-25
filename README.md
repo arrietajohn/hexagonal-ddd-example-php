@@ -52,6 +52,56 @@ Aplicación web PHP para la gestión de usuarios: registro, listado, visualizaci
 - Anti-corruption Layer
 - Application Mapper
 
+
+### Capa de Infraestructura
+- Repository Pattern
+- Data Mapper
+- Persistence DTO
+- Persistence Entity
+- PDO con Prepared Statements
+- Adapter Pattern
+
+### Entrypoints / Presentación
+- Enrutamiento por query string (`?route=`)
+- PRG (Post-Redirect-Get)
+- Flash Messages
+- Autenticación basada en sesiones
+- Web Mapper
+- Web DTOs (WebRequest / UserResponse)
+- `View::render` con `extract`
+- Security Guard (IIFE)
+
+---
+
+### Patrones de diseño
+- Front Controller
+- Repository
+- Data Mapper
+- Factory Method
+- DTO
+- Strategy
+- Template Method
+- IIFE
+- PRG (Post-Redirect-Get)
+
+### Principios SOLID
+- **SRP** — Single Responsibility Principle
+- **OCP** — Open/Closed Principle
+- **LSP** — Liskov Substitution Principle
+- **ISP** — Interface Segregation Principle
+- **DIP** — Dependency Inversion Principle
+
+### Principios de Clean Code
+- `declare(strict_types=1)` en todos los archivos
+- Clases `final`
+- Value Objects inmutables
+- Named Constructors
+- Fail-fast
+- Nombres autodocumentados
+- Separación estricta de capas
+- Sin fugas de abstracción
+- Fail-safe defaults (valores por defecto seguros)
+
 ### Configuración externalizada (12-Factor App: Factor III)
 - Variables de entorno separadas del código fuente
 - Credenciales en `.env` (ignorado por git), nunca en se debe publicar en el repo
