@@ -7,6 +7,7 @@ require_once __DIR__ . '/../Ports/Out/UpdateUserPort.php';
 require_once __DIR__ . '/../Ports/Out/GetUserByIdPort.php';
 require_once __DIR__ . '/../Ports/Out/GetUserByEmailPort.php';
 require_once __DIR__ . '/Mappers/UserApplicationMapper.php';
+require_once __DIR__ . '/EmailNotificationService.php';
 
 require_once __DIR__ . '/../../Domain/Exceptions/UserAlreadyExistsException.php';
 require_once __DIR__ . '/../../Domain/Exceptions/UserNotFoundException.php';
@@ -21,15 +22,18 @@ final class UpdateUserService implements UpdateUserUseCase
     private UpdateUserPort $updateUserPort;
     private GetUserByIdPort $getUserByIdPort;
     private GetUserByEmailPort $getUserByEmailPort;
+    private EmailNotificationService $emailNotification;
 
     public function __construct(
         UpdateUserPort $updateUserPort,
         GetUserByIdPort $getUserByIdPort,
-        GetUserByEmailPort $getUserByEmailPort
+        GetUserByEmailPort $getUserByEmailPort,
+        EmailNotificationService $emailNotification
     ) {
-        $this->updateUserPort = $updateUserPort;
-        $this->getUserByIdPort = $getUserByIdPort;
+        $this->updateUserPort     = $updateUserPort;
+        $this->getUserByIdPort    = $getUserByIdPort;
         $this->getUserByEmailPort = $getUserByEmailPort;
+        $this->emailNotification  = $emailNotification;
     }
 
     public function execute(UpdateUserCommand $command): UserModel
@@ -48,7 +52,6 @@ final class UpdateUserService implements UpdateUserUseCase
             throw UserAlreadyExistsException::becauseEmailAlreadyExists($newEmail->value());
         }
 
-        // If password is blank, keep the existing hashed password; otherwise hash the new one.
         $password = ($command->getPassword() !== '')
             ? UserPassword::fromPlainText($command->getPassword())
             : $currentUser->password();
@@ -62,6 +65,9 @@ final class UpdateUserService implements UpdateUserUseCase
             $command->getStatus()
         );
 
-        return $this->updateUserPort->update($userToUpdate);
+        $updatedUser = $this->updateUserPort->update($userToUpdate);
+        $this->emailNotification->notifyUserUpdated($updatedUser);
+
+        return $updatedUser;
     }
 }
