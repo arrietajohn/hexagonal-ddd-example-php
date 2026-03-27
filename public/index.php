@@ -332,15 +332,16 @@ function sendPasswordRecoveryEmail(string $email, string $name, string $tempPass
     require $templateFile;
     $htmlBody = (string) ob_get_clean();
 
-    $subject = '=?UTF-8?B?' . base64_encode('Recuperación de contraseña') . '?=';
-    $headers  = implode("\r\n", array(
-        'MIME-Version: 1.0',
-        'Content-Type: text/html; charset=UTF-8',
-        'From: CRUD Usuarios <no-reply@crud-usuarios.local>',
-        'X-Mailer: PHP/' . PHP_VERSION,
-    ));
+    ClassLoader::loadClass('EmailDestinationModel');
 
-    mail($email, $subject, $htmlBody, $headers);
+    $destination = new EmailDestinationModel(
+        $email,
+        $name,
+        'Recuperación de contraseña',
+        $htmlBody
+    );
+
+    DependencyInjection::getEmailSenderService()->send($destination);
 }
 
 
