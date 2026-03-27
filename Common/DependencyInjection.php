@@ -49,28 +49,52 @@ final class DependencyInjection
         );
     }
 
+    public static function getEmailSenderService(): EmailSenderService
+    {
+        ClassLoader::loadClass('EmailSenderService');
+
+        return new EmailSenderService(
+            host:        EnvLoader::get('SMTP_HOST',         'smtp.gmail.com'),
+            username:    EnvLoader::get('SMTP_USERNAME',     ''),
+            password:    EnvLoader::get('SMTP_PASSWORD',     ''),
+            fromAddress: EnvLoader::get('SMTP_FROM_ADDRESS', ''),
+            fromName:    EnvLoader::get('SMTP_FROM_NAME',    'CRUD Usuarios'),
+            encryption:  EnvLoader::get('SMTP_ENCRYPTION',   'tls'),
+            port:        EnvLoader::getInt('SMTP_PORT',      587)
+        );
+    }
+
+    public static function getEmailNotificationService(): EmailNotificationService
+    {
+        ClassLoader::loadClass('EmailNotificationService');
+
+        return new EmailNotificationService(
+            self::getEmailSenderService()
+        );
+    }
+
     public static function getCreateUserUseCase(): CreateUserUseCase
     {
         ClassLoader::loadClass('CreateUserService');
-
         $repository = self::getUserRepository();
 
         return new CreateUserService(
             $repository,
-            $repository
+            $repository,
+            self::getEmailNotificationService()
         );
     }
 
     public static function getUpdateUserUseCase(): UpdateUserUseCase
     {
         ClassLoader::loadClass('UpdateUserService');
-
         $repository = self::getUserRepository();
 
         return new UpdateUserService(
             $repository,
             $repository,
-            $repository
+            $repository,
+            self::getEmailNotificationService()
         );
     }
 
@@ -95,7 +119,6 @@ final class DependencyInjection
     public static function getDeleteUserUseCase(): DeleteUserUseCase
     {
         ClassLoader::loadClass('DeleteUserService');
-
         $repository = self::getUserRepository();
 
         return new DeleteUserService(
