@@ -17,6 +17,7 @@ Aplicación web PHP para la gestión de usuarios: registro, listado, visualizaci
 - Recuperación de contraseña mediante contraseña temporal enviada por correo
 - Protección de rutas según estado de autenticación
 - Protección contra acceso directo a archivos y listado de directorios
+- Envía notificaciones a los usuarios vía Correo Electronico
 
 ---
 
