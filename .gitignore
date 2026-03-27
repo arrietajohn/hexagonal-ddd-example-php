@@ -77,3 +77,5 @@ yarn-error.log*
 
 
 docs/
+.vscode/settings.json
+*.ps1
